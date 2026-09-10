@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>背光板-原理类型、选型参数与应用场景全解析</title>
+<meta name="description" content="背光板是液晶显示模组中提供均匀光源的关键组件，本文介绍背光板的工作原理、侧入式与直下式结构、亮度均匀度、色域、导光板与扩散膜等核心参数，以及显示器、电视、车载与工业设备的选型与维护要点。">
+<meta name="keywords" content="背光板,背光模组,导光板,侧入式背光,直下式背光,LCD背光源,亮度均匀度">
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0b1220;
+  --bg-soft:#111c31;
+  --panel:#16233c;
+  --line:#243venue;
+  --line:#25334f;
+  --txt:#e8eefb;
+  --txt-dim:#9fb0cc;
+  --accent:#4ea8ff;
+  --accent-2:#7af0d0;
+  --warm:#ffcf6b;
+  --radius:14px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ---------- 顶部 ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,18,32,.9);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  display:flex;align-items:center;gap:28px;
+  height:64px;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:.5px}
+.brand-mark{
+  width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  display:grid;place-items:center;color:#06101f;font-size:15px;font-weight:800;
+}
+.brand small{display:block;font-size:11px;font-weight:400;color:var(--txt-dim);letter-spacing:1px}
+nav.main-nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+nav.main-nav a{
+  padding:8px 14px;border-radius:9px;font-size:14px;color:var(--txt-dim);
+  transition:.2s;
+}
+nav.main-nav a:hover{color:var(--txt);background:var(--panel)}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;
+  padding:72px 0 60px;
+  background:
+    radial-gradient(900px 380px at 12% -10%,rgba(78,168,255,.22),transparent 60%),
+    radial-gradient(700px 340px at 88% 0%,rgba(122,240,208,.14),transparent 62%),
+    var(--bg);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;letter-spacing:2px;color:var(--accent-2);
+  border:1px solid rgba(122,240,208,.35);
+  padding:5px 12px;border-radius:999px;margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(28px,4vw,44px);line-height:1.28;font-weight:800;letter-spacing:.5px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(100deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.lead{
+  margin-top:20px;color:var(--txt-dim);font-size:16px;max-width:620px;
+}
+.hero-actions{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-block;padding:12px 24px;border-radius:10px;font-size:14.5px;font-weight:600;
+  border:1px solid transparent;transition:.22s;cursor:pointer;
+}
+.btn-primary{background:linear-gradient(100deg,var(--accent),#3d8fe0);color:#04101f}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line);color:var(--txt-dim)}
+.btn-ghost:hover{color:var(--txt);border-color:var(--accent);background:rgba(78,168,255,.08)}
+
+/* 结构示意 */
+.stack-card{
+  background:linear-gradient(180deg,var(--panel),var(--bg-soft));
+  border:1px solid var(--line);border-radius:18px;padding:22px;
+}
+.stack-card h3{font-size:14px;color:var(--txt-dim);font-weight:600;letter-spacing:1px;margin-bottom:16px}
+.layer{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 14px;border-radius:10px;margin-bottom:8px;
+  font-size:13.5px;border:1px solid var(--line);
+  background:rgba(255,255,255,.02);
+}
+.layer:last-child{margin-bottom:0}
+.layer .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.layer .tag{margin-left:auto;font-size:11.5px;color:var(--txt-dim)}
+.dot-1{background:#ffcf6b}
+.dot-2{background:#4ea8ff}
+.dot-3{background:#7af0d0}
+.dot-4{background:#c48cff}
+.dot-5{background:#ff8f8f}
+
+/* ---------- 通用区块 ---------- */
+section.block{padding:66px 0;border-bottom:1px solid var(--line)}
+.sec-head{margin-bottom:34px;max-width:760px}
+.sec-head .kicker{
+  font-size:12.5px;letter-spacing:2.5px;color:var(--accent);font-weight:700;text-transform:uppercase;
+}
+.sec-head h2{font-size:clamp(22px,2.6vw,30px);margin-top:10px;font-weight:800;letter-spacing:.4px}
+.sec-head p{color:var(--txt-dim);margin-top:12px;font-size:15px}
+
+/* 两栏正文 */
+.prose-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:44px}
+.prose p{margin-bottom:16px;color:#cdd8ec;font-size:15.3px}
+.prose h3{font-size:18px;margin:26px 0 10px;font-weight:700;color:#fff}
+.prose ul{margin:0 0 18px 20px;color:#cdd8ec;font-size:15px}
+.prose li{margin-bottom:8px}
+.prose strong{color:var(--accent-2);font-weight:600}
+
+.aside-card{
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px;margin-bottom:18px;
+}
+.aside-card h4{font-size:15px;margin-bottom:12px;color:#fff}
+.aside-card ul{list-style:none;font-size:14px;color:var(--txt-dim)}
+.aside-card li{padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.07);display:flex;gap:10px}
+.aside-card li:last-child{border-bottom:none}
+.aside-card li span{color:var(--accent);font-weight:700;flex:0 0 auto}
+
+/* 类型卡 */
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.type-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;transition:.25s;position:relative;overflow:hidden;
+}
+.type-card::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:3px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  opacity:0;transition:.25s;
+}
+.type-card:hover{transform:translateY(-4px);border-color:rgba(78,168,255,.5)}
+.type-card:hover::before{opacity:1}
+.type-card h3{font-size:17px;margin-bottom:10px}
+.type-card p{font-size:14px;color:var(--txt-dim);margin-bottom:14px}
+.type-card ul{list-style:none;font-size:13.4px;color:#b9c7de}
+.type-card li{padding-left:16px;position:relative;margin-bottom:6px}
+.type-card li::before{
+  content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;
+  background:var(--accent-2);opacity:.8;
+}
+
+/* 参数表 */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse;font-size:14.2px;min-width:640px}
+thead{background:var(--bg-soft)}
+th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:#fff;font-weight:600;font-size:13.5px;letter-spacing:.5px}
+td{color:#c6d3e8}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(78,168,255,.05)}
+td.param{color:var(--accent-2);font-weight:600;white-space:nowrap}
+
+/* 应用场景 */
+.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.app-item{
+  background:linear-gradient(180deg,rgba(78,168,255,.09),rgba(78,168,255,.02));
+  border:1px solid var(--line);border-radius:var(--radius);padding:22px 18px;
+}
+.app-item .ico{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(78,168,255,.16);color:var(--accent);font-size:18px;margin-bottom:14px;
+}
+.app-item h3{font-size:15.5px;margin-bottom:8px}
+.app-item p{font-size:13.6px;color:var(--txt-dim)}
+
+/* 选购步骤 */
+.steps{display:grid;gap:16px}
+.step{
+  display:flex;gap:20px;padding:22px;
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);
+}
+.step-num{
+  flex:0 0 42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#06101f;font-weight:800;font-size:16px;
+}
+.step h3{font-size:16.5px;margin-bottom:8px}
+.step p{font-size:14.3px;color:var(--txt-dim)}
+
+/* FAQ */
+.faq-item{
+  border:1px solid var(--line);border-radius:var(--radius);
+  margin-bottom:12px;background:var(--bg-soft);overflow:hidden;
+}
+.faq-q{
+  width:100%;text-align:left;background:none;border:none;color:var(--txt);
+  padding:18px 22px;font-size:15.4px;font-weight:600;font-family:inherit;
+  display:flex;justify-content:space-between;gap:16px;cursor:pointer;align-items:center;
+}
+.faq-q .plus{
+  flex:0 0 auto;width:22px;height:22px;border-radius:50%;
+  border:1px solid var(--line);display:grid;place-items:center;
+  font-size:14px;color:var(--accent);transition:.25s;
+}
+.faq-item.open .plus{transform:rotate(45deg);background:var(--accent);color:#06101f;border-color:var(--accent)}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .3s ease;
+  padding:0 22px;color:var(--txt-dim);font-size:14.5px;
+}
+.faq-item.open .faq-a{max-height:340px;padding-bottom:20px}
+
+/* 页脚 */
+footer{
+  padding:52px 0 30px;background:#080e19;
+}
+.foot-grid{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:34px;
+  padding-bottom:32px;border-bottom:1px solid var(--line);
+}
+.foot-grid h4{font-size:14.5px;margin-bottom:14px;color:#fff}
+.foot-grid p,.foot-grid li{font-size:13.6px;color:var(--txt-dim)}
+.foot-grid ul{list-style:none}
+.foot-grid li{margin-bottom:9px}
+.foot-grid a:hover{color:var(--accent)}
+.copyright{
+  padding-top:22px;font-size:13px;color:#6d7d97;
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+
+/* 响应式 */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:34px}
+  .prose-grid{grid-template-columns:1fr;gap:30px}
+  .type-grid{grid-template-columns:1fr 1fr}
+  .app-grid{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .topbar-inner{height:auto;padding:12px 0;flex-wrap:wrap;gap:12px}
+  nav.main-nav{margin-left:0;width:100%;overflow-x:auto;padding-bottom:4px}
+  nav.main-nav a{white-space:nowrap;padding:7px 11px;font-size:13px}
+  .hero{padding:48px 0 44px}
+  section.block{padding:48px 0}
+  .type-grid{grid-template-columns:1fr}
+  .app-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr;gap:26px}
+  .step{flex-direction:column;gap:12px}
+  .btn{width:100%;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">BL</span>
+      <span>背光板技术站<small>LCD BACKLIGHT GUIDE</small></span>
+    </div>
+    <nav class="main-nav">
+      <a href="#what">基础认知</a>
+      <a href="#types">结构类型</a>
+      <a href="#params">核心参数</a>
+      <a href="#apps">应用场景</a>
+      <a href="#choose">选型方法</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">液晶显示 · 光源组件</span>
+        <h1>背光板：让<em>液晶画面</em>真正亮起来的那一层光</h1>
+        <p class="lead">
+          液晶本身不会发光，屏幕上的图像之所以能被看见，靠的是位于液晶面板背后的背光板提供均匀、稳定的光源。
+          理解背光板的结构、类型与关键参数，是评估一块屏幕亮度、均匀度、色域与使用寿命的基础。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#what">从原理开始了解</a>
+          <a class="btn btn-ghost" href="#choose">查看选型要点</a>
+        </div>
+      </div>
+
+      <aside class="stack-card" aria-label="背光模组典型层结构示意">
+        <h3>典型背光模组层结构（自下而上）</h3>
+        <div class="layer"><span class="dot dot-1"></span>反射片<span class="tag">回收杂散光</span></div>
+        <div class="layer"><span class="dot dot-2"></span>导光板 / 灯板<span class="tag">光源传导</span></div>
+        <div class="layer"><span class="dot dot-3"></span>扩散膜<span class="tag">打散亮斑</span></div>
+        <div class="layer"><span class="dot dot-4"></span>增亮膜 / 棱镜膜<span class="tag">提升轴向亮度</span></div>
+        <div class="layer"><span class="dot dot-5"></span>液晶面板<span class="tag">调制图像</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 基础认知 -->
+  <section class="block" id="what">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Basic</span>
+        <h2>背光板是什么，它在显示系统里承担什么角色</h2>
+        <p>先厘清概念边界，再谈结构与参数，能避免把背光板、背光模组、导光板混为一谈。</p>
+      </div>
+
+      <div class="prose-grid">
+        <div class="prose">
+          <p>
+            <strong>背光板</strong>是液晶显示（LCD）模组中负责提供背景光源的组件。液晶层通过电压改变分子排列，从而控制光线能否通过，但它自身并不发光。
+            因此必须在液晶面板后方布置一套发光与匀光结构，把点光源或线光源转换为面光源，画面才能被观看者看到。
+          </p>
+          <p>
+            在行业语境中，狭义的“背光板”有时特指导光板或灯板这类核心光学板材；广义上则常与“背光模组”混用，
+            指包含光源、导光板、反射片、扩散膜、增亮膜以及外框在内的一整套组件。日常交流中，理解对方指的是哪一层，比争论名称更重要。
+          </p>
+
+          <h3>背光板要解决的三个基本问题</h3>
+          <ul>
+            <li><strong>亮度：</strong>在给定功耗下，把足够的光送到观看者方向，通常以尼特（cd/m²）衡量。</li>
+            <li><strong>均匀度：</strong>画面各处的亮度差异要小，避免出现明显的亮斑、暗角或灯影。</li>
+            <li><strong>色彩与稳定性：</strong>光源光谱要匹配目标色域，同时在不同温度与使用时长下保持色温漂移可控。</li>
+          </ul>
+
+          <h3>为什么它直接影响观感</h3>
+          <p>
+            一块面板的对比度、色域和响应速度由液晶与彩膜决定，但漏光、四角发暗、边缘发亮、局部泛白等常见问题，
+            往往出在背光结构上。背光设计的优劣，会直接决定屏幕在暗场下是否干净、在大面积纯色画面下是否均匀。
+          </p>
+        </div>
+
+        <aside>
+          <div class="aside-card">
+            <h4>名词速览</h4>
+            <ul>
+              <li><span>01</span>背光板：提供背景光的板材或组件总称</li>
+              <li><span>02</span>导光板：把侧边光均匀导向整个出光面</li>
+              <li><span>03</span>扩散膜：打散光线，弱化亮斑与纹路</li>
+              <li><span>04</span>增亮膜：通过折射回收提升轴向亮度</li>
+              <li><span>05</span>反射片：把向下漏出的光反射回出光面</li>
+            </ul>
+          </div>
+          <div class="aside-card">
+            <h4>常见光源方案</h4>
+            <ul>
+              <li><span>·</span>LED 侧发光：轻薄、常见于显示器与笔记本</li>
+              <li><span>·</span>LED 直下式：分区控光能力强，多见于电视</li>
+              <li><span>·</span>Mini LED：灯珠更密，可实现更多分区</li>
+              <li><span>·</span>CCFL：早期方案，现已较少使用</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 结构类型 -->
+  <section class="block" id="types">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Structure</span>
+        <h2>侧入式、直下式与 Mini LED：三种主流结构怎么选</h2>
+        <p>结构决定了厚度、均匀度上限与控光能力，是最先需要确定的方向。</p>
+      </div>
+
+      <div class="type-grid">
+        <article class="type-card">
+          <h3>侧入式背光</h3>
+          <p>光源布置在导光板侧边，光线经导光板网点散射后从正面均匀射出。</p>
+          <ul>
+            <li>机身可以做到很薄</li>
+            <li>光源数量少，成本相对可控</li>
+            <li>大面积均匀度控制难度较高</li>
+            <li>难以做精细分区控光</li>
+          </ul>
+        </article>
+
+        <article class="type-card">
+          <h3>直下式背光</h3>
+          <p>光源阵列直接排布在面板后方，光线经扩散结构混光后照射液晶层。</p>
+          <ul>
+            <li>亮度上限高，均匀度易控制</li>
+            <li>可划分区域做局部调光</li>
+            <li>需要一定混光距离，机身偏厚</li>
+            <li>灯珠数量多，功耗与成本上升</li>
+          </ul>
+        </article>
+
+        <article class="type-card">
+          <h3>Mini LED 背光</h3>
+          <p>以尺寸更小的 LED 作为光源，单位面积内可布置更多灯珠与分区。</p>
+          <ul>
+            <li>分区数量多，暗场控制更细腻</li>
+            <li>有利于提升峰值亮度与对比观感</li>
+            <li>驱动与算法复杂度明显提高</li>
+            <li>对散热与一致性要求更严</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心参数 -->
+  <section class="block" id="params">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Parameters</span>
+        <h2>看背光板时，真正需要关注的参数</h2>
+        <p>下面这些指标比“灯珠数量”更能反映实际显示效果，也更容易在规格书中被模糊处理。</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>参数</th>
+              <th>含义</th>
+              <th>影响</th>
+              <th>关注提示</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="param">亮度</td>
+              <td>单位面积出光强度，常用 cd/m²（尼特）</td>
+              <td>强光环境下的可读性</td>
+              <td>注意是全屏亮度还是局部峰值</td>
+            </tr>
+            <tr>
+              <td class="param">亮度均匀度</td>
+              <td>画面最暗区与最亮区的亮度比值</td>
+              <td>纯色画面是否干净</td>
+              <td>通常以百分比表示，越高越好</td>
+            </tr>
+            <tr>
+              <td class="param">色域覆盖</td>
+              <td>可还原的色彩范围，常以 sRGB、DCI-P3 表述</td>
+              <td>色彩鲜艳程度与准确性</td>
+              <td>需说明测试标准与容差</td>
+            </tr>
+            <tr>
+              <td class="param">色温与漂移</td>
+              <td>白场偏冷或偏暖，以及长时间使用后的变化</td>
+              <td>白场一致性与观感舒适度</td>
+              <td>关注不同亮度档位下的表现</td>
+            </tr>
+            <tr>
+              <td class="param">调光方式</td>
+              <td>PWM 调光或 DC 调光</td>
+              <td>低亮度下的频闪感受</td>
+              <td>低频 PWM 对敏感人群不友好</td>
+            </tr>
+            <tr>
+              <td class="param">分区数量</td>
+              <td>可独立调节亮度的背光区域个数</td>
+              <td>暗场光晕与对比表现</td>
+              <td>分区多不等于算法一定好</td>
+            </tr>
+            <tr>
+              <td class="param">寿命与光衰</td>
+              <td>达到规定亮度衰减比例前的使用时长</td>
+              <td>长期使用后的亮度保持</td>
+              <td>与散热设计密切相关</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 应用场景 -->
+  <section class="block" id="apps">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Applications</span>
+        <h2>不同场景对背光板的要求并不相同</h2>
+        <p>同一套参数，放在电视上合适，放到车载或工业设备上未必成立。</p>
+      </div>
+
+      <div class="app-grid">
+        <div class="app-item">
+          <div class="ico">▣</div>
+          <h3>电视与显示器</h3>
+          <p>重视亮度、分区控光与色域表现，大尺寸下对均匀度和暗场光晕尤其敏感。</p>
+        </div>
+        <div class="app-item">
+          <div class="ico">▤</div>
+          <h3>笔记本与平板</h3>
+          <p>以轻薄和功耗为先，侧入式结构占主导，低亮度下的调光方式更受关注。</p>
+        </div>
+        <div class="app-item">
+          <div class="ico">▥</div>
+          <h3>车载显示</h3>
+          <p>要求宽温工作、抗振动与长寿命，对低温启动亮度和一致性有额外约束。</p>
+        </div>
+        <div class="app-item">
+          <div class="ico">▦</div>
+          <h3>工业与医疗</h3>
+          <p>强调长期稳定、可维护与批次一致性，往往更看重规格可追溯而非极致轻薄。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 选型方法 -->
+  <section class="block" id="choose">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Selection</span>
+        <h2>选型与评估的五个步骤</h2>
+        <p>按顺序推进，可以避免在后期才发现结构或参数不匹配。</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h3>先确定使用环境与观看距离</h3>
+            <p>室内弱光、明亮办公还是户外强光，直接决定所需亮度区间；观看距离与屏幕尺寸共同影响对均匀度的容忍度。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h3>根据厚度与控光需求选结构</h3>
+            <p>追求轻薄优先考虑侧入式；需要高亮度和分区控光则倾向直下式或 Mini LED，并同步评估散热与驱动方案。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h3>核对光学参数与测试条件</h3>
+            <p>亮度、色域、均匀度都要确认测试标准、样片状态与容差范围，避免拿不同条件下的数据直接比较。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <h3>评估驱动、调光与频闪</h3>
+            <p>确认调光方式与频率，关注低亮度档位是否出现闪烁、色偏或亮度跳变，这些在长时间使用中更容易被感知。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div>
+            <h3>验证可靠性与一致性</h3>
+            <p>关注高低温循环、长时间点亮后的光衰与色漂，以及不同批次之间的亮度差异是否在可接受范围内。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="block" id="faq" style="border-bottom:none">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">FAQ</span>
+        <h2>关于背光板的常见问题</h2>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item">
+          <button class="faq-q" type="button">背光板和导光板是同一个东西吗？<span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>不完全相同。导光板是背光结构中的一个部件，主要作用是把侧边光源的光均匀导向整个出光面。背光板在广义上指整套提供背景光的组件，包含光源、导光板、反射片、扩散膜等。日常沟通中两者常被混用，具体含义需要结合上下文判断。</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">屏幕出现四角发暗或边缘发亮，是背光板的问题吗？<span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>这类现象通常与背光结构相关，例如导光板网点分布、灯珠间距、混光距离不足或反射片贴合不良。但也可能由面板本身的漏光或装配应力引起。判断时可以在纯色画面下观察现象是否随亮度变化，必要时由专业维修人员检测确认。</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">分区数量越多，画质就越好吗？<span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>分区数量提升有助于缩小光晕范围，但实际效果还取决于控光算法、分区布局以及面板本身的对比度。分区多而算法粗糙时，反而可能出现亮度跳变或光斑感。评估时应结合实际画面表现，而不是只看数字。</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">PWM 调光和 DC 调光有什么区别？<span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>PWM 调光通过快速开关光源来调节平均亮度，频率较低时部分人会感到频闪；DC 调光通过改变电流大小来调节亮度，通常频闪感受更弱。两者各有取舍，在低亮度下的表现差异更明显，选购时可关注产品是否说明调光方式与频率。</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">背光板会随时间变暗吗？<span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>会。LED 光源在使用过程中存在光衰，亮度会缓慢下降，同时可能出现色温漂移。衰减速度与散热设计、驱动电流和使用环境温度有关。良好散热与合理驱动有助于延缓这一过程。</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button">更换背光板需要注意什么？<span class="plus">+</span></button>
+          <div class="faq-a">
+            <p>需要匹配尺寸、厚度、接口与驱动电压，并注意光学膜片的层序与方向。操作环境应尽量洁净，避免灰尘进入光学层造成亮点或暗斑。若缺乏拆装经验，建议交由专业维修人员处理，以免损伤面板。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>背光板技术站</h4>
+        <p>围绕液晶背光结构、光学参数与选型方法整理的技术参考内容，面向显示行业从业者与对屏幕原理感兴趣的读者。</p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <ul>
+          <li><a href="#what">基础认知</a></li>
+          <li><a href="#types">结构类型</a></li>
+          <li><a href="#params">核心参数</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>深入阅读</h4>
+        <ul>
+          <li><a href="#apps">应用场景</a></li>
+          <li><a href="#choose">选型方法</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>说明</h4>
+        <ul>
+          <li>内容为技术科普整理</li>
+          <li>具体参数以厂商规格书为准</li>
+          <li>不构成采购或维修建议</li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>© 背光板技术站 · 液晶显示光源知识整理</span>
+      <span>参数与方案请以实际产品规格为准</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var items = document.querySelectorAll('.faq-item');
+  items.forEach(function(item){
+    var btn = item.querySelector('.faq-q');
+    btn.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      items.forEach(function(other){ other.classList.remove('open'); });
+      if(!isOpen){ item.classList.add('open'); }
+    });
+  });
+})();
+</script>
+
+</body>
+  </html>
